@@ -1,6 +1,6 @@
 {
   "name": "mycontacts",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Cordova project for testing Contact list",
   "main": "index.js",
   "scripts": {
