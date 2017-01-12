@@ -44,34 +44,41 @@
                 contacts.forEach(function(contact) {
                     console.log('contact', contact);
                     // Email
-                    contact.emails.forEach(function(email) {
-                        var to = _build_names(contact);
-                        var to_email = _prepare_email(email.value);
+                    if (contact.emails) {
+                        contact.emails.forEach(function(email) {
+                            var to = _build_names(contact);
+                            var to_email = _prepare_email(email.value);
 
-                        if (to && to_email) {
-                            to.toEmail = to_email;
-                            to.selected = false;
-                            result.email.push(to);
-                        }
-                    });
+                            if (to && to_email) {
+                                to.toEmail = to_email;
+                                to.selected = false;
+                                result.email.push(to);
+                            }
+                        });
+                    }
 
                     // Phone
-                    contact.phoneNumbers.forEach(function(phone) {
-                        var to = _build_names(contact);
-                        var to_phone = _prepare_phone(phone.value);
+                    if (contact.phoneNumbers) {
+                        contact.phoneNumbers.forEach(function(phone) {
+                            var to = _build_names(contact);
+                            var to_phone = _prepare_phone(phone.value);
 
-                        if (to && to_phone) {
-                            to.toPhone = to_phone;
-                            to.selected = false;
-                            result.phone.push(to);
-                        }
-                    });
+                            if (to && to_phone) {
+                                to.toPhone = to_phone;
+                                to.selected = false;
+                                result.phone.push(to);
+                            }
+                        });
+                    }
                 });
             } catch (e) {
                 console.error('something wrong');
             }
 
-            vm.contacts = result;
+            vm.contacts = {
+                email: _.uniqBy(result.email, 'toEmail'),
+                phone: _.uniqBy(result.phone, 'toPhone')
+            };
             $scope.$apply();
         }
 
